@@ -38,7 +38,7 @@ public class UnitCartsController {
         String customerId = "customerIdGet";
         Cart cart = new Cart(customerId);
         cartDAO.save(cart);
-        Cart gotCart = cartsController.get(customerId);
+        Cart gotCart = cartsController.get(customerId, null);
         assertThat(gotCart, is(equalTo(cart)));
         assertThat(cartDAO.findByCustomerId(customerId).get(0), is(equalTo(cart)));
     }
@@ -65,7 +65,7 @@ public class UnitCartsController {
         cart2.add(itemId2);
         cartDAO.save(cart2);
 
-        cartsController.mergeCarts(customerId1, customerId2);
+        cartsController.mergeCarts(customerId1, customerId2, null);
         assertThat(cartDAO.findByCustomerId(customerId1).get(0).contents(), is(hasSize(2)));
         assertThat(cartDAO.findByCustomerId(customerId1).get(0).contents(), is(containsInAnyOrder(itemId1, itemId2)));
         assertThat(cartDAO.findByCustomerId(customerId2), is(empty()));

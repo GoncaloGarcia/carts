@@ -33,19 +33,19 @@ public class UnitItemsController {
     public void whenNewItemAdd() {
         Item item = new Item("id", "itemId", 1, 0F);
         String customerId = "customerIdAdd";
-        itemsController.addToCart(customerId, item);
-        assertThat(itemsController.getItems(customerId), is(hasSize(1)));
-        assertThat(itemsController.getItems(customerId), is(org.hamcrest.CoreMatchers.hasItem(item)));
+        itemsController.addToCart(customerId, item, null);
+        assertThat(itemsController.getItems(customerId, null), is(hasSize(1)));
+        assertThat(itemsController.getItems(customerId, null), is(org.hamcrest.CoreMatchers.hasItem(item)));
     }
 
     @Test
     public void whenExistIncrementQuantity() {
         Item item = new Item("id", "itemId", 1, 0F);
         String customerId = "customerIdIncrement";
-        itemsController.addToCart(customerId, item);
-        itemsController.addToCart(customerId, item);
-        assertThat(itemsController.getItems(customerId), is(hasSize(1)));
-        assertThat(itemsController.getItems(customerId), is(org.hamcrest.CoreMatchers.hasItem(item)));
+        itemsController.addToCart(customerId, item, null);
+        itemsController.addToCart(customerId, item, null);
+        assertThat(itemsController.getItems(customerId, null), is(hasSize(1)));
+        assertThat(itemsController.getItems(customerId, null), is(org.hamcrest.CoreMatchers.hasItem(item)));
         assertThat(itemDAO.findOne(item.id()).quantity(), is(equalTo(2)));
     }
 
@@ -53,20 +53,20 @@ public class UnitItemsController {
     public void shouldRemoveItemFromCart() {
         Item item = new Item("id", "itemId", 1, 0F);
         String customerId = "customerIdRemove";
-        itemsController.addToCart(customerId, item);
-        assertThat(itemsController.getItems(customerId), is(hasSize(1)));
-        itemsController.removeItem(customerId, item.itemId());
-        assertThat(itemsController.getItems(customerId), is(hasSize(0)));
+        itemsController.addToCart(customerId, item, null);
+        assertThat(itemsController.getItems(customerId, null), is(hasSize(1)));
+        itemsController.removeItem(customerId, item.itemId(), null);
+        assertThat(itemsController.getItems(customerId, null), is(hasSize(0)));
     }
 
     @Test
     public void shouldSetQuantity() {
         Item item = new Item("id", "itemId", 1, 0F);
         String customerId = "customerIdQuantity";
-        itemsController.addToCart(customerId, item);
-        assertThat(itemsController.getItems(customerId).get(0).quantity(), is(equalTo(item.quantity())));
+        itemsController.addToCart(customerId, item, null);
+        assertThat(itemsController.getItems(customerId, null).get(0).quantity(), is(equalTo(item.quantity())));
         Item anotherItem = new Item(item, 15);
-        itemsController.updateItem(customerId, anotherItem);
+        itemsController.updateItem(customerId, anotherItem, null);
         assertThat(itemDAO.findOne(item.id()).quantity(), is(equalTo(anotherItem.quantity())));
     }
 

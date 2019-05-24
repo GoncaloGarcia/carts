@@ -21,4 +21,4 @@ LABEL org.label-schema.vendor="Weaveworks" \
   org.label-schema.vcs-ref="${COMMIT}" \
   org.label-schema.schema-version="1.0"
 
-ENTRYPOINT ["/usr/local/bin/java.sh","-jar","./app.jar", "--port=80"]
+ENTRYPOINT ["/usr/local/bin/java.sh", "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1040", "-jar","./app.jar", "--port=80"]
